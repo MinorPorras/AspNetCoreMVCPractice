@@ -2,14 +2,32 @@
 
 @{
     Layout = "_Layout";
+    var message = "Hola mundo";
+    var items = new List<string> { "Item1", "Item2", "Item3" };
+    var logged = true;
 }
 <html lang="es">
 <head>
     <title>Overview</title>
 </head>
 <body>
-<div>
+<main>
+    @if (logged)
+    {
+        <p>Bienvenido de vuelta!</p>
+    }
+    @else{
+    <p>Por favor inicia sesión</p>
+    }
+    <p>@message</p>
     <p>Este es el el nombre del item: @Model.Name</p>
-</div>
+    <ul>
+        @foreach (var item in items)
+        {
+            <li>@item</li>
+        }
+    </ul>
+</main>
 </body>
 </html>
+
