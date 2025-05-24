@@ -1,23 +1,24 @@
 @model AspNetCoreMVCPractice.Models.Items
 
 @{
-    Layout = "_Layout";
+    Layout = "_Layout"; // Esto ya indica que usará el layout
     var message = "Hola mundo";
     var items = new List<string> { "Item1", "Item2", "Item3" };
     var logged = true;
 }
-<html lang="es">
-<head>
-    <title>Overview</title>
-</head>
-<body>
+
+@{
+    ViewData["Title"] = "Overview de Items"; // Esto es una buena práctica para el título de la página
+}
+
 <main>
     @if (logged)
     {
         <p>Bienvenido de vuelta!</p>
     }
-    @else{
-    <p>Por favor inicia sesión</p>
+    else // Nota el espacio antes del corchete o un salto de línea
+    {
+        <p>Por favor inicia sesión</p>
     }
     <p>@message</p>
     <p>Este es el el nombre del item: @Model.Name</p>
@@ -28,6 +29,3 @@
         }
     </ul>
 </main>
-</body>
-</html>
-
