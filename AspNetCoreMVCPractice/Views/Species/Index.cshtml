@@ -1,0 +1,39 @@
+@model List<AspNetCoreMVCPractice.Models.Species>
+
+@{
+    ViewData["Title"] = "Especies"; // Esto es una buena práctica para el título de la página
+}
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <title>Especies</title>
+</head>
+<body>
+<div>
+    <h3>Index</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Estatus</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var species in Model)
+        {
+            <tr>
+                <td>@species.Name</td>     
+                <td>@species.Status</td>   
+                <td>
+                    <a asp-action="Edit" asp-route-id="@species.Id">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@species.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

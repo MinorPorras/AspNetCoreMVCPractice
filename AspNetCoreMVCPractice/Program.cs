@@ -5,8 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<PracticeContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConn")));
+builder.Services.AddDbContext<AspNetVetContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AspNetVet")));
 
 var app = builder.Build();
 
