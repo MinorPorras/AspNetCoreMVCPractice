@@ -1,6 +1,7 @@
 using AspNetCoreMVCPractice.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreMVCPractice.Models;
 
 namespace AspNetCoreMVCPractice.Controllers;
 
@@ -30,6 +31,37 @@ public class SpeciesController : Controller
         var items = await _context.Species.ToListAsync();
         return View(items);
     }
+    
+    /// <summary>
+    /// Goes to the view for creating a new species record.
+    /// </summary>
+    /// <returns>The view for creating a new species record.</returns>
+    public ViewResult Create()
+    {
+        return View();
+    }
+    
+    /// <summary>
+    /// Creates a new species record.
+    /// </summary>
+    /// <returns>The Index action view of Species.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Create([Bind("Id, Name")] Species species, string status)
+    {
+        //SI el modelo no es valido, se regresa a la vista de crear
+        Console.WriteLine(ModelState.IsValid);
+        Console.WriteLine(species.Id);
+        species.Status = status == "Active" ? true : false;
+        Console.WriteLine(species.Status);
+        if (!ModelState.IsValid) return View(species);
+        //SI el modelo es valido, se agrega a la base de datos
+        _context.Species.Add(species);
+        await _context.SaveChangesAsync();
+        //Redirecciona a la vista de index
+        return RedirectToAction(nameof(Index));
+    }
+    
+    
 
     /// <summary>
     /// Handles the editing of a species record.
@@ -50,4 +82,6 @@ public class SpeciesController : Controller
     {
         throw new NotImplementedException();
     }
+    
+    
 }
