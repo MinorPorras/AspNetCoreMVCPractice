@@ -1,0 +1,33 @@
+@model AspNetCoreMVCPractice.Models.Species
+
+@{
+    Layout = "_Layout"; // Usar el layout definido en _Layout.cshtml
+    ViewData["Title"] = "Nueva especie";
+}
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <title>Nueva especie</title>
+</head>
+<body>
+<div class="add_Species">
+    <h3>Nueva especie</h3>
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Name">Nombre:</label>
+            <input type="text" id="Name" name="Name" required/>
+        </div>
+        <div class="form-group">
+            <label for="Status">Estatus:</label>
+            <select id="Status" name="Status" required>
+                <option value="Active">Activo</option>
+                <option value="Inactive">Inactivo</option>
+            </select>
+        </div>
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+</body>
+</html>

@@ -11,13 +11,15 @@
     <title>Especies</title>
 </head>
 <body>
-<div>
+<div class="index_Basic">
     <h3>Index</h3>
+    <a asp-action="Create" class="btn btn-primary">Nueva especie</a>
     <table class="table">
         <thead>
         <tr>
             <th>Name</th>
             <th>Estatus</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +27,16 @@
         {
             <tr>
                 <td>@species.Name</td>     
-                <td>@species.Status</td>   
+                <td>
+                    @if (species.Status == true)
+                    {
+                        <span class="badge bg-success user-select-none">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger user-select-none">Inactivo</span>
+                    }
+                </td>   
                 <td>
                     <a asp-action="Edit" asp-route-id="@species.Id">Editar</a>
                     <a asp-action="Delete" asp-route-id="@species.Id">Eliminar</a>
