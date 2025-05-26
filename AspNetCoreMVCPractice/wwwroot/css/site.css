@@ -3,6 +3,7 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: system-ui;
 }
 
 @media (min-width: 768px) {
@@ -37,12 +38,23 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
   gap: 1rem;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  
+  & h3{
+    font-size: 2rem;
+    color: #000;
+    font-weight: 600;
+    text-align: inherit;
+  }
   
   & table{
     grid-column: 1 /-1;
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
+    text-align: inherit;
+    
   }
 }
 .container{
@@ -140,18 +152,25 @@ main{
       border: none;
       border-radius: .5rem;
       font-size: clamp(1rem, 4vw, 1.5rem);
-        &:hover {
-            transform: scale(1.01);
-            background-color: #25fb57;
-            border: 1px solid #171817;
-            transition: all 1s ease;
-        }
-        &:active {
-            transform: scale(1.01);
-            background-color: #25fb57;
-            border: 1px solid #171817;
-            transition: all 1s ease;
-        }
+      cursor: pointer;
+      &:hover {
+          transform: scale(1.01);
+          background-color: #25fb57;
+          border: 1px solid #171817;
+          transition: all 1s ease;
+      }
+      &:active {
+          transform: scale(1.01);
+          background-color: #25fb57;
+          border: 1px solid #171817;
+          transition: all 1s ease;
+      }
+      & .editBtn:hover {
+          transform: scale(1.01);
+          background-color: #FFD186;
+          color: #000;
+          transition: inherit;
+      }
     }
   }
     

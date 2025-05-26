@@ -1,0 +1,34 @@
+@model AspNetCoreMVCPractice.Models.Species
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Editar especie";
+    ViewData["Status"] = Model.Status;
+}
+<div class="add_Species">
+    
+    <h3>Editar especie</h3>
+    <form asp-action="Edit" method="post">
+        <div class="form-group">
+            <label for="Name">Nombre:</label>
+            <input type="text" id="Name" asp-for="Name" required/>
+        </div>
+        <div class="form-group">
+            <label for="Status">Estatus:</label>
+            <select id="Status" asp-for="Status" required>
+                @if (Model.Status)
+                {
+                    <option value="Active" selected="selected">Activo</option>
+                    <option value="Inactive">Inactivo</option>
+                }
+                else
+                {
+                    <option value="Active">Activo</option>
+                    <option value="Inactive" selected="selected">Inactivo</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="editBtn">Actualizar</button>
+    </form>
+</div>
+
