@@ -1,3 +1,4 @@
+using System.Data.SqlTypes;
 using AspNetCoreMVCPractice.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,10 +50,7 @@ public class SpeciesController : Controller
     public async Task<IActionResult> Create([Bind("Id, Name")] Species species, string status)
     {
         //SI el modelo no es valido, se regresa a la vista de crear
-        Console.WriteLine(ModelState.IsValid);
-        Console.WriteLine(species.Id);
         species.Status = status == "Active" ? true : false;
-        Console.WriteLine(species.Status);
         if (!ModelState.IsValid) return View(species);
         //SI el modelo es valido, se agrega a la base de datos
         _context.Species.Add(species);
@@ -68,9 +66,34 @@ public class SpeciesController : Controller
     /// </summary>
     /// <returns>The edit view for a species record.</returns>
     /// <exception cref="NotImplementedException">This method is not yet implemented.</exception>
-    public IActionResult Edit()
+/// <summary>
+    /// Displays the edit form for a specific species record.
+    /// </summary>
+    /// <param name="id">The ID of the species to edit.</param>
+    /// <returns>The edit view for the specified species record, or NotFound if the species doesn't exist.</returns>
+    public async Task<IActionResult> Edit(int id)
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Edit normal");
+        var item = await _context.Species.FirstOrDefaultAsync(x => x.Id == id);
+        if (item == null) return NotFound();
+        return View(item);
+    }
+    
+    /// <summary>
+    /// Saves the changes made to a species record.
+    /// </summary>
+    /// <param name="species">Object from the species model tha conatins the information to save</param>
+    /// <param name="status">String containing "Active" or "Inactive", if is "Active" its value is turned to true</param>
+    /// <returns>Redirects to the Index action of Species.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Edit([Bind("Id, Name")] Species species, string status)
+    {
+        species.Status = status == "Active" ? true : false;
+        // Si el modelo no es valido, se regresa a la vista de editar
+        if (!ModelState.IsValid) return View(species);
+        _context.Update(species);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     /// <summary>
