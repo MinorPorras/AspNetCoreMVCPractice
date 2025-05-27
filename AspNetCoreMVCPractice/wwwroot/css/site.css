@@ -157,19 +157,19 @@ main{
           transform: scale(1.01);
           background-color: #25fb57;
           border: 1px solid #171817;
-          transition: all 1s ease;
+          transition: inherit;
       }
       &:active {
           transform: scale(1.01);
           background-color: #25fb57;
           border: 1px solid #171817;
-          transition: all 1s ease;
+          transition: inherit;
       }
     }
   }
   .editBtn:hover {
     transform: scale(1.01);
-    background-color: #FFD186;
+    background-color: #fdb233;
     color: #000;
     transition: inherit;
   }

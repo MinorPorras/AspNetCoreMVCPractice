@@ -31,13 +31,19 @@
                 </td>   
                 <td>
                     <a asp-action="Edit" asp-route-id="@species.Id">Editar</a>
-                    <form asp-action="DeleteSpecies" asp-route-id="@species.Id" method="post" class="d-inline">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" onclick="submitDeleteForm(event)" class="btn btn-link p-0">Eliminar</button>
-                    </form>
+                    <button type="button" class="showModal" data-id="@species.Id" value="@species.Name">Eliminar</button>
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    <dialog class="deleteDialog">
+        <h1>Desea eliminar la especie</h1>
+        <form asp-action="DeleteSpecies" method="post" class="d-inline deleteForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" id="speciesId" />
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+        <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancelar</button>
+    </dialog>
 </div>

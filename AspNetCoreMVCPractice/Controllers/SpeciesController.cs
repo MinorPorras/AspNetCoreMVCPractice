@@ -49,6 +49,7 @@ public class SpeciesController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([Bind("Id, Name")] Species species, string status)
     {
+        Console.WriteLine("pasa");
         //SI el modelo no es valido, se regresa a la vista de crear
         species.Status = status == "Active" ? true : false;
         if (!ModelState.IsValid) return View(species);
@@ -118,6 +119,7 @@ public class SpeciesController : Controller
     /// <param name="id">The ID of the species to delete</param>
     [HttpDelete]
     [ValidateAntiForgeryToken]
+    [Route("Species/DeleteSpecies/{id}")]
     public async Task<IActionResult> DeleteSpecies(int id)
     {
         var species = await _context.Species.FindAsync(id);
@@ -128,6 +130,6 @@ public class SpeciesController : Controller
 
         _context.Species.Remove(species);
         await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
+        return Ok();
     }
 }
