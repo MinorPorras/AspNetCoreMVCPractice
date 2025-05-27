@@ -31,7 +31,10 @@
                 </td>   
                 <td>
                     <a asp-action="Edit" asp-route-id="@species.Id">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@species.Id">Eliminar</a>
+                    <form asp-action="DeleteSpecies" asp-route-id="@species.Id" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" onclick="submitDeleteForm(event)" class="btn btn-link p-0">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         }

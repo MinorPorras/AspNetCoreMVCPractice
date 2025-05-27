@@ -97,14 +97,37 @@ public class SpeciesController : Controller
     }
 
     /// <summary>
-    /// Handles the deletion of a species record.
+    /// Removes a species record from the database.
     /// </summary>
-    /// <returns>The delete confirmation view for a species record.</returns>
-    /// <exception cref="NotImplementedException">This method is not yet implemented.</exception>
-    public IActionResult Delete()
+    /// <param name="id">The ID of the species to delete.</param>
+    /// <returns>Redirects to the Index view after deletion, or returns NotFound if the species doesn't exist.</returns>
+    public async Task<IActionResult> Delete(int id)
     {
-        throw new NotImplementedException();
+        var item = await _context.Species.FirstOrDefaultAsync(x => x.Id == id);
+        if (item == null) return NotFound();
+        Species species = item;
+        _context.Species.Remove(species);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+
     }
     
-    
+    /// <summary>
+    /// Removes a species record from the database using HTTP DELETE method.
+    /// </summary>
+    /// <param name="id">The ID of the species to delete</param>
+    [HttpDelete]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteSpecies(int id)
+    {
+        var species = await _context.Species.FindAsync(id);
+        if (species == null)
+        {
+            return NotFound();
+        }
+
+        _context.Species.Remove(species);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
 }

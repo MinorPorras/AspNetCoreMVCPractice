@@ -165,13 +165,13 @@ main{
           border: 1px solid #171817;
           transition: all 1s ease;
       }
-      & .editBtn:hover {
-          transform: scale(1.01);
-          background-color: #FFD186;
-          color: #000;
-          transition: inherit;
-      }
     }
+  }
+  .editBtn:hover {
+    transform: scale(1.01);
+    background-color: #FFD186;
+    color: #000;
+    transition: inherit;
   }
     
     
