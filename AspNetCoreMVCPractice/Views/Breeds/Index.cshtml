@@ -1,0 +1,64 @@
+@model List<AspNetCoreMVCPractice.Models.Breed>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Razas";
+}
+
+<div  class="index_Basic">
+    <h3>Raza</h3>
+    <a asp-action="Create" class="btn btn-primary">Crear raza</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Especie</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center bg-dark-subtle">No hay razas registradas.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach(var breed in Model)
+            {
+                <tr>
+                    <td>@breed.Name</td>
+                    <td>
+                        @if (breed.Status)
+                        {
+                            <span class="badge bg-success user-select-none">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger user-select-none">Inactivo</span>
+                        }
+                    </td>
+                    <td>@(breed.Species?.Name ?? "No especificada")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@breed.Id">Editar</a>
+                        <button type="button" class="showModal" data-id="@breed.Id" value="@breed.Name">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<dialog class="deleteDialog">
+    <p></p>
+    <form class="deleteForm" method="dialog">
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="Id" name="Id" />
+        <div>
+            <button type="submit">Confirmar</button>
+            <button type="button" onclick="closeModal()">Cancelar</button>
+        </div>
+    </form>
+</dialog>

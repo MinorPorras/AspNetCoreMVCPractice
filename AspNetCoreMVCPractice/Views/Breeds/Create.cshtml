@@ -1,0 +1,35 @@
+@model AspNetCoreMVCPractice.Models.Breed;
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Nueva raza";
+}
+
+<div class="add_Element">
+    <h3>Nueva Raza</h3>
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label for="Name">Nombre:</label>
+            <input type="text" name="Name" id="Name" required />
+        </div>
+        <div class="form-group">
+            <label for="Status">Status:</label>
+            <select name="Status" id="Status">
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="SpeciesId">Especie:</label>
+            <select name="SpeciesId" id="SpeciesId" required>
+                <option value="">Seleccione una especie</option>
+                @foreach (var species in ViewBag.Species)
+                {
+                    <option value="@species.Id">@species.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+

@@ -25,5 +25,5 @@ public partial class Breed
 
     [ForeignKey("SpeciesId")]
     [InverseProperty("Breeds")]
-    public virtual Species Species { get; set; } = null!;
+    public virtual Species? Species { get; set; } = null!;
 }
