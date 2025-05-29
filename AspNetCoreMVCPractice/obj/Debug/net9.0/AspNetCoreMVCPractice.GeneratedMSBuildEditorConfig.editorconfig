@@ -32,6 +32,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJlZWRzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/RiderProjects/AspNetCoreMVCPractica/AspNetCoreMVCPractice/Views/Breeds/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJlZWRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/RiderProjects/AspNetCoreMVCPractica/AspNetCoreMVCPractice/Views/Breeds/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJlZWRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

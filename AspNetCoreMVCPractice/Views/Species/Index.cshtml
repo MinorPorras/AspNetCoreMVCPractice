@@ -1,6 +1,7 @@
 @model List<AspNetCoreMVCPractice.Models.Species>
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Especies"; // Esto es una buena práctica para el título de la página
 }
 <div class="index_Basic">
@@ -20,7 +21,7 @@
             <tr>
                 <td>@species.Name</td>     
                 <td>
-                    @if (species.Status == true)
+                    @if (species.Status)
                     {
                         <span class="badge bg-success user-select-none">Activo</span>
                     }
@@ -39,11 +40,13 @@
     </table>
     <dialog class="deleteDialog">
         <h1>Desea eliminar la especie</h1>
-        <form asp-action="DeleteSpecies" method="post" class="d-inline deleteForm">
+        <form asp-action="Delete" method="post" class="d-inline deleteForm">
             @Html.AntiForgeryToken()
             <input type="hidden" name="id" id="Id" />
+            <input type="hidden" id="controller" value="Species"/>
             <button type="submit" class="btn btn-danger">Eliminar</button>
         </form>
         <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancelar</button>
     </dialog>
 </div>
+

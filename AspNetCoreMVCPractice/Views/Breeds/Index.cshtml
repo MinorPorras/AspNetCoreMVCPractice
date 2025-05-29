@@ -49,16 +49,16 @@
             }
         }
     </table>
+    <dialog class="deleteDialog">
+        <h1>Desea eliminar la raza</h1>
+        <form class="d-inline deleteForm" method="post" asp-action="Delete">
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="Id" name="Id" />
+            <input type="hidden" id="controller" value="Breeds"/>
+            <button type="submit">Confirmar</button>
+        </form>
+        <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancelar</button>
+    </dialog>
 </div>
 
-<dialog class="deleteDialog">
-    <p></p>
-    <form class="deleteForm" method="dialog">
-        @Html.AntiForgeryToken()
-        <input type="hidden" id="Id" name="Id" />
-        <div>
-            <button type="submit">Confirmar</button>
-            <button type="button" onclick="closeModal()">Cancelar</button>
-        </div>
-    </form>
-</dialog>
+

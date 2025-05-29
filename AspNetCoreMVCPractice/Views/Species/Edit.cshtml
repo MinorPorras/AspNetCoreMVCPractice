@@ -5,10 +5,11 @@
     ViewData["Title"] = "Editar especie";
     ViewData["Status"] = Model.Status;
 }
-<div class="add_Species">
+<div class="modifyElement">
     
     <h3>Editar especie</h3>
     <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
         <div class="form-group">
             <label for="Name">Nombre:</label>
             <input type="text" id="Name" asp-for="Name" required/>

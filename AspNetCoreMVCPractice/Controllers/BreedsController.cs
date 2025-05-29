@@ -63,14 +63,63 @@ public async Task<IActionResult> Create([Bind("Id,Name,SpeciesId,Status")] Breed
     }
 }
 
-    public IActionResult Edit()
+    public async Task<IActionResult> Edit(int id)
     {
-        throw new NotImplementedException();
+        var breed = await _context.Breeds.Include(b => b.Species).FirstOrDefaultAsync(b => b.Id == id);
+        if (breed == null) return NotFound();
+        ViewBag.Species = await GetSpeciesList();
+        ViewBag.SelectedSpeciesId = breed.SpeciesId;  // Agregamos el ID de la especie seleccionada al ViewBag
+        return View(breed);
+    }
+    
+    [HttpPut]
+    public async Task<IActionResult> Edit(int id, [FromBody] Breed breed)
+    {
+        if (id != breed.Id) return BadRequest();
+
+        try
+        {
+            var existingBreed = await _context.Breeds.Include(b => b.Species)
+                .FirstOrDefaultAsync(b => b.Id == id);
+                
+            if (existingBreed == null) return NotFound();
+
+            var species = await _context.Species.FindAsync(breed.SpeciesId);
+            if (species == null)
+            {
+                return BadRequest(new { message = "La especie seleccionada no existe" });
+            }
+
+            existingBreed.Name = breed.Name;
+            existingBreed.SpeciesId = breed.SpeciesId;
+            existingBreed.Status = breed.Status;
+            existingBreed.Species = species;
+
+            _context.Breeds.Update(existingBreed);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        catch (DbUpdateException)
+        {
+            return StatusCode(500, new { message = "No se pudo guardar los cambios en la base de datos" });
+        }
     }
 
-    public IActionResult DeleteBreed()
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
     {
-        throw new NotImplementedException();
+        var breed = await _context.Breeds.Include(b => b.Species).FirstOrDefaultAsync(b => b.Id == id);
+        if (breed == null) return NotFound();
+        try
+        {
+            _context.Breeds.Remove(breed);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        catch (DbUpdateException)
+        {
+            return StatusCode(500, new { message = "No se pudo eliminar la raza de la base de datos" });
+        }
     }
 }
 

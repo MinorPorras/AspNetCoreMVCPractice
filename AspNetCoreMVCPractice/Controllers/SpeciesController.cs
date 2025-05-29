@@ -96,31 +96,15 @@ public class SpeciesController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
-
-    /// <summary>
-    /// Removes a species record from the database.
-    /// </summary>
-    /// <param name="id">The ID of the species to delete.</param>
-    /// <returns>Redirects to the Index view after deletion, or returns NotFound if the species doesn't exist.</returns>
-    public async Task<IActionResult> Delete(int id)
-    {
-        var item = await _context.Species.FirstOrDefaultAsync(x => x.Id == id);
-        if (item == null) return NotFound();
-        Species species = item;
-        _context.Species.Remove(species);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-
-    }
     
     /// <summary>
     /// Removes a species record from the database using HTTP DELETE method.
     /// </summary>
     /// <param name="id">The ID of the species to delete</param>
     [HttpDelete]
-    [ValidateAntiForgeryToken]
-    [Route("Species/DeleteSpecies/{id}")]
-    public async Task<IActionResult> DeleteSpecies(int id)
+    [ValidateAntiForgeryToken] 
+    [Route("Species/Delete/{id}")]
+    public async Task<IActionResult> Delete (int id)
     {
         var species = await _context.Species.FindAsync(id);
         if (species == null)

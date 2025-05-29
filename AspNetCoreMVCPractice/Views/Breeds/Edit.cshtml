@@ -1,0 +1,48 @@
+@model AspNetCoreMVCPractice.Models.Breed
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Editar raza";
+}
+
+<div class="modifyElement">
+    <h3>Editar Raza</h3>
+    <form asp-action="Edit" method="post" class="modFormBreed">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" id="controller" value="Breeds"/>
+        <div class="form-group">
+            <label asp-for="Name">Nombre:</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="Status">Status:</label>
+            <select asp-for="Status" class="form-control">
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="SpeciesId">Especie:</label>
+            <select asp-for="SpeciesId" class="form-control" id="SpeciesId" required>
+                <option value="">Seleccione una especie</option>
+                @foreach (var species in ViewBag.Species)
+                {
+                    @if (species.Id == ViewBag.SelectedSpeciesId)
+                    {
+                        <option value="@species.Id" selected>@species.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@species.Id">@species.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-primary" id="updateBtn">Guardar</button>
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+    </form>
+</div>
+

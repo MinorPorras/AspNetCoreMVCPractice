@@ -1,5 +1,62 @@
-﻿// Verificar si estamos en una página con el modal de eliminación
-if (document.querySelector('.deleteDialog')) {
+﻿document.addEventListener('DOMContentLoaded', () => {
+    // Aquí puedes poner el código que quieres ejecutar cuando carga la página
+    console.log('La página ha cargado completamente');
+    
+    // Ejemplo: si estamos en la página de editar breed
+    if (document.querySelector('.modifyElement')) {
+        console.log('Estamos en la página de edición');
+        ModifyBreed();
+    }
+
+    // Si estás en una página con el modal de eliminación
+    if (document.querySelector('.deleteDialog')) {
+        console.log('Podemos eliminar una especie');
+        DeleteElement();
+    }
+});
+
+function ModifyBreed() {
+    let updateBtn = document.getElementById('updateBtn');
+
+    updateBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const form = document.querySelector('.modifyElement');
+        const id = parseInt(document.getElementById('Id').value);
+        const name = document.getElementById('Name').value;
+        const status = document.getElementById('Status').value === 'true';
+        const speciesId = parseInt(document.getElementById('SpeciesId').value);
+        const controller = document.getElementById('controller').value;
+
+        try {
+            const response = await fetch(`/${controller}/Edit/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': form.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    id: id,
+                    name: name,
+                    speciesId: speciesId,
+                    status: status
+                })
+            });
+
+            if (response.ok) {
+                window.location.href = `/${controller}/Index`;
+            } else {
+                const error = await response.json();
+                console.error('Error al actualizar:', error.message);
+                alert('Error al actualizar: ' + error.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al procesar la solicitud');
+        }
+    });
+}
+
+function LoadModalBtns() {
     /**
      * Selección de todos los botones que abren el modal de eliminación
      * @type {NodeListOf<Element>}
@@ -11,7 +68,7 @@ if (document.querySelector('.deleteDialog')) {
      * @type {HTMLElement}
      */
     let dialog = document.getElementsByClassName('deleteDialog')[0];
-
+    
     /**
      * Configura los event listeners para los botones de eliminación.
      * Cada botón al ser clickeado abrirá un modal de confirmación.
@@ -26,13 +83,12 @@ if (document.querySelector('.deleteDialog')) {
             dialog.showModal();
         });
     });
+}
 
-    /**
-     * Cierra el diálogo modal de eliminación
-     */
-    function closeModal() {
-        dialog.close();
-    }
+
+// Verificar si estamos en una página con el modal de eliminación
+function DeleteElement() {
+    LoadModalBtns();
 
     /**
      * Maneja el envío del formulario de eliminación.
@@ -42,10 +98,11 @@ if (document.querySelector('.deleteDialog')) {
     function submitDeleteForm(event) {
         event.preventDefault();
         const form = event.target.closest('form');
-        const dialog = document.getElementsByTagName('dialog')[0];
         const id = document.getElementById('Id').value;
-        
-        fetch(`/Species/DeleteSpecies/${id}`, {
+        const controller = document.getElementById('controller').value;
+        const route = `/${controller}/Delete/${id}`
+        console.log(route)
+        fetch(route, {
             method: 'DELETE',
             headers: {
                 'RequestVerificationToken': form.querySelector('input[name="__RequestVerificationToken"]').value
@@ -63,3 +120,13 @@ if (document.querySelector('.deleteDialog')) {
     // Agrega el event listener al formulario de eliminación
     document.querySelector('.deleteForm').addEventListener('submit', submitDeleteForm);
 }
+
+
+/**
+ * Cierra el diálogo modal de eliminación
+ */
+function closeModal() {
+    let dialog = document.getElementsByClassName('deleteDialog')[0];
+    dialog.close();
+}
+
